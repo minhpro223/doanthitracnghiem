@@ -4,6 +4,7 @@ function CreateExamRoom({ examConfig, goToQuizApp, currentUser }) {
   const [inputCode, setInputCode] = useState("");
   const [roomName, setRoomName] = useState("");
   const [isCodeValid, setIsCodeValid] = useState(false);
+  const savedConfig = JSON.parse(localStorage.getItem("examConfig"));
 
   const [selectedExamInfo, setSelectedExamInfo] = useState(null); // ✅ Lưu đề đã chọn
 
@@ -23,6 +24,7 @@ function CreateExamRoom({ examConfig, goToQuizApp, currentUser }) {
       </div>
     );
   }
+  
 
   const handleCheckCode = (e) => {
     e.preventDefault();
@@ -40,7 +42,7 @@ function CreateExamRoom({ examConfig, goToQuizApp, currentUser }) {
       alert("❌ Mã đề không hợp lệ.");
     }
   };
-
+  
   const handleStartExam = (e) => {
     e.preventDefault();
     const studentData = {
@@ -71,12 +73,7 @@ function CreateExamRoom({ examConfig, goToQuizApp, currentUser }) {
               required
               placeholder="VD: 1"
             />
-            <label>Tên phòng thi:</label>
-            <input
-              value={roomName}
-              onChange={(e) => setRoomName(e.target.value)}
-              required
-            />
+            
             <button className="submit-button">Kiểm tra mã đề</button>
           </form>
         ) : (
@@ -86,10 +83,11 @@ function CreateExamRoom({ examConfig, goToQuizApp, currentUser }) {
             {/* ✅ Thông báo chi tiết đề */}
             <div className="exam-info-box">
               <p>
-                <strong>Số câu hỏi:</strong> {selectedExamInfo?.questionsData?.length || 0}
+                <strong>Số câu hỏi:</strong>{" "}
+                {selectedExamInfo?.questionsData?.length || 0}
               </p>
               <p>
-                <strong>Thời gian làm bài 30 phút</strong> {examConfig.duration} 
+                <strong>Thời gian làm bài 30 phút</strong> {examConfig.duration}
               </p>
             </div>
 
